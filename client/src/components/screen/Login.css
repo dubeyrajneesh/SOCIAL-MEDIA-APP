@@ -64,6 +64,10 @@
         display: block ;
         width: 100vw;
     }
+    .NavLink-ctrl{
+        text-decoration: none ;
+        color: inherit;
+    }
 
     .right-ctrl{
         padding: 5px 5px ;

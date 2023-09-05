@@ -1,3 +1,47 @@
-*{
+body{
+    background-color: #F2F2F2;
+}
+
+.nav-ctrl{
     background-color: #fff;
+}
+
+.search-ctrl{
+    width: 40vw ;
+    
+     
+}
+
+.form-ctrl2{
+    /* margin-right: 10% ; */
+}
+.icon-ctrl{
+    margin-left: 2rem ;
+}
+
+.img-ctrl{
+    margin-left: 3rem ;
+}
+
+@media only screen and (max-width: 494px)
+{
+    .img-ctrl{
+        display: none ;
+    }
+
+    .search-ctrl{
+        width: 35vw ;
+        
+         
+    }
+}
+
+@media only screen and (min-width: 495px) and (max-width: 650px){
+
+    .img-ctrl{
+        width: 60px ;
+        height: 30px ;
+        margin-left: 1rem ;
+    }
+
 }

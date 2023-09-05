@@ -2,6 +2,7 @@ import React from 'react'
 import './Login.css';
 import desktop_image from '../Images/desktop_image.jpg'
 import mobile_image from '../Images/mobile_image.jpg'
+import { NavLink } from 'react-router-dom';
 
 const Login = () => {
   return (
@@ -40,7 +41,10 @@ const Login = () => {
               </div>
               <div className="d-grid mt-5 mb-5">
 
-              <button  class="btn btn-outline-secondary shadow-lg "><span className="text-muted">Don't have an account ?</span><span className="text-info"> Sign Up</span></button>
+              <button  class="btn btn-outline-secondary shadow-lg ">
+                <span className="text-muted">Don't have an account ?</span>
+              <NavLink exact to='/signup' className="NavLink-ctrl">  <span className="text-info"> Sign Up</span> </NavLink>
+              </button>
               </div>
             </form>
 
