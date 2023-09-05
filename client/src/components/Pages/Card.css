@@ -1,3 +1,48 @@
-*{
-    background-color: #F2F2F2 ;
+
+.card-ctrl{
+
+    /* border: 2px solid red ; */
+    /* display: flex ; */
+}
+
+.img-ctrl3{
+    width: 60px ;
+    height: 65px ;
+    border-radius: 50%;
+}
+
+.left-ctrl1{
+    display: flex ;
+}
+.head-ctrl{
+    margin-left: 14px ;
+}
+.row-ctrl{
+    display: flex ;
+}
+.img-ctrl4{
+    width: 320px ;
+    height: 350px ; 
+}
+
+.btm-row-ctrl{
+    display: flex;
+}
+.icon-ctrl5{
+    margin-right: 12px ;
+    font-size: 24px ;
+}
+.like-ctrl6{
+    font-size: 20px ;
+    font-weight: 700 ;
+    margin-right: 10px ;
+}
+
+
+
+@media only screen and(max-width:450px){
+
+    .like-ctrl6{
+        
+    }
 }
