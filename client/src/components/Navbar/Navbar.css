@@ -4,10 +4,13 @@ body{
 
 .nav-ctrl{
     background-color: #fff;
+    /* border: 2px solid yellow ; */
+    /* width: 60vw ; */
 }
 
 .search-ctrl{
     width: 40vw ;
+    margin-left: 15px ;
     
      
 }
@@ -30,9 +33,17 @@ body{
     }
 
     .search-ctrl{
-        width: 35vw ;
+        width: 25vw ;
+        margin-left: 5px ;
         
          
+    }
+
+    .img-ctrl{
+        margin-left: 1rem ;
+    }
+    .nav-ctrl{
+        width: 90vw ;
     }
 }
 

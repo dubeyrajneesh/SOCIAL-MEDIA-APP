@@ -40,9 +40,15 @@
 
 
 
-@media only screen and(max-width:450px){
+@media only screen and (max-width:450px){
 
-    .like-ctrl6{
-        
+    .card-ctrl{
+        width: 95vw ;
+        /* border: 2px solid red ; */
+    }
+
+    .img-ctrl4{
+        width: 320px ;
+        height: 350px ; 
     }
 }
