@@ -9,10 +9,13 @@ body{
 }
 
 .search-ctrl{
-    width: 40vw ;
+    width: 30vw ;
     margin-left: 15px ;
     
      
+}
+.lm-ctrl{
+    cursor: pointer;
 }
 
 .form-ctrl2{
@@ -20,6 +23,8 @@ body{
 }
 .icon-ctrl{
     margin-left: 2rem ;
+    margin-right: 8rem;
+    display: flex;
 }
 
 .img-ctrl{

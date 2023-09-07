@@ -17,7 +17,7 @@ function App() {
 
         <Route exact path='/login' element={<Login />} />
         <Route exact path='/signup' element={<Signup />} />
-        <Route exact path='/post' element={<Postoverview/>}/>
+        <Route exact path='/posts' element={<Postoverview/>}/>
         <Route exact path='/profile' element= {<Profile/>}/>
 
       </Routes>
