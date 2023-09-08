@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const PostModel = mongoose.model("PostModel");
 const protectedRoute = require("../Middleware/Middleware");
 
-//all users posts
 router.get("/allposts", (req, res) => {
     PostModel.find()
         .populate("author", "_id fullName profileImg")
@@ -17,7 +16,6 @@ router.get("/allposts", (req, res) => {
         })
 });
 
-//all posts only from logged in user
 router.get("/myallposts", protectedRoute, (req, res) => {
     PostModel.find({ author: req.user._id })
         .populate("author", "_id fullName profileImg")

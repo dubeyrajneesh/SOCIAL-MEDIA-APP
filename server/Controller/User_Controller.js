@@ -1,4 +1,12 @@
 const UserModel = require('../Modeks/User_Model') ;
+const bcryptjs = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const {JWT_SECRET} = require('../Config');
+
+
+
+
+
 const logincontroller=(req,res)=>{
 
     const { email, password } = req.body;
