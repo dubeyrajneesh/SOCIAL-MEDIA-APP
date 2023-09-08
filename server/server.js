@@ -4,7 +4,8 @@ const app = express () ;
 const PORT = 4000 ;
 const dotenv = require('dotenv');
 const cors = require('cors') ;
-const bodyParser = require('body-parser') ;
+// const bodyParser = require('body-parser') ;
+// const Router = require('./routes/User_Route') ;
 
 
 dotenv.config() ;
@@ -31,6 +32,7 @@ require('./Modeks/Post_Model');
 
 app.use(cors());
 app.use(express.json());
+// app.use('/' , Router) ;
 
 app.use(require('./routes/User_Route'));
 app.use(require('./routes/Post_Route'));

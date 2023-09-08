@@ -2,8 +2,15 @@ import React from 'react'
 import './Navbar.css';
 import logo from '../Images/logo.jpg'
 import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const navigate = useNavigate() ;
+
+  const LogOut=()=>{
+    navigate('/login')
+
+  }
   return (
     <div>
 
@@ -26,7 +33,7 @@ const Navbar = () => {
                 </div>
                 <ul class="dropdown-menu">
                   <li><button class="dropdown-item" type="button">My Profile</button></li>
-                  <li><button class="dropdown-item" type="button"><i class="fa-solid fa-right-from-bracket"></i>&nbsp;Logout</button></li>
+                  <li><button class="dropdown-item" type="button" onClick={()=>{LogOut()}}><i class="fa-solid fa-right-from-bracket"></i>&nbsp;Logout</button></li>
                   
                 </ul>
               </div>
