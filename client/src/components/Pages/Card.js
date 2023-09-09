@@ -1,7 +1,12 @@
 import React from 'react';
 import './Card.css'
+import { useSelector } from 'react-redux';
 
-const Card = () => {
+const Card = ({post , deletePost }) => {
+
+  const user = useSelector(state => state.UserReducer);
+  console.log(post.author._id);
+  console.log(user.user._id)
   return (
     <div className="card-ctrl shadow p-3 mb-4">
 
@@ -12,23 +17,23 @@ const Card = () => {
           </div>
 
           <div className="head-ctrl">
-            <h5>_dexter</h5>
-            <h6> Mumbai , India</h6>
+            <h5>{post.description}</h5>
+            <h6>{post.location} </h6>
           </div>
 
         </div>
 
-        <div className=" col-lg-4 col-md-4 col-sm-4  ">
+          <div className=" col-lg-4 col-md-4 col-sm-4  ">
 
-          <i className="fa-solid fa-ellipsis-vertical fs-1 py-1 px-2 float-end "></i>
+         <i onClick={() => deletePost(post._id)}  className="fa-solid fa-ellipsis-vertical fs-1 py-1 px-2 float-end "></i> 
 
 
         </div>
       </div>
 
-      <div className="row">
+      <div className="row mt-4">
         <div className=" col-lg-12 col-md-12 col-sm-12 d-flex">
-          <img src="https://images.unsplash.com/photo-1553531384-cc64ac80f931?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxzZWFyY2h8MTV8fGxhbmRzY2FwZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="img" className="img-ctrl4" />
+          <img src={post.image} alt="img" className="img-ctrl4" />
         </div>
       </div>
 

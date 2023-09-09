@@ -5,6 +5,11 @@ import mobile_image from '../Images/mobile_image.jpg'
 import { NavLink } from 'react-router-dom';
 import { LogInServices } from '../Services/API';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../Config';
+import Swal from 'sweetalert2';
+import {useDispatch} from 'react-redux'
+import axios from 'axios' ;
+import { LOGIN_SUCCESS } from '../../Redux/Types/Types';
 
 const logininitialvale={
   email: "",
@@ -17,6 +22,7 @@ const Login = () => {
   const[login , setLogin] = useState(logininitialvale)
   const {email , password} = login ;
   const [loading , setLoading] = useState(false) ;
+  const dispatch = useDispatch() ;
 
   const onInputChange=(e)=>{
 
@@ -24,14 +30,40 @@ const Login = () => {
 
   }
 
-  const LogIn=async()=>{
+  const LogIn=async(event)=>{
 
-    setLoading(true) ;
+    // setLoading(true) ;
 
-    let response= await LogInServices(login) ;
-    if(!response) return ;
-    navigate('/profile')
-    setLoading(false) ;
+    // let response= await LogInServices(login) ;
+    // if(!response) return ;
+    // navigate('/profile')
+    // setLoading(false) ;
+
+    // event.preventDefault();
+    setLoading(true);
+    const requestData = { email, password }
+    axios.post(`${API_BASE_URL}/login`, requestData)
+        .then((result) => {
+            if (result.status == 200) {
+              
+                setLoading(false);
+                localStorage.setItem("token", result.data.result.token);
+                localStorage.setItem('user', JSON.stringify(result.data.result.user));
+                dispatch({ type: 'LOGIN_SUCCESS', payload: result.data.result.user });
+                setLoading(false);
+                navigate('/profile');
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            setLoading(false);
+            Swal.fire({
+                icon: 'error',
+                title: error.response.data.error
+            })
+        })
+
+
 
   }
   return (

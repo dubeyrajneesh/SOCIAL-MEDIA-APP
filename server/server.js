@@ -13,6 +13,8 @@ const USERNAME= process.env.DB_USERNAME;
 const PASSWORD= process.env.DB_PASSWORD;
 const MONGODB_URL = `mongodb+srv://${USERNAME}:${PASSWORD}@reactogram.vexazst.mongodb.net/reactogram?retryWrites=true&w=majority` ;
 
+global.__basedir = __dirname;
+
 mongoose.connect(MONGODB_URL, {useNewUrlParser:true})
 
 mongoose.connection.on('connected' , ()=>{
