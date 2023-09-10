@@ -19,6 +19,9 @@
 }
 .row-ctrl{
     display: flex ;
+    /* flex-direction: row;
+    justify-content: center;
+    align-items: center; */
 }
 .img-ctrl4{
     width: 320px ;
@@ -31,11 +34,23 @@
 .icon-ctrl5{
     margin-right: 12px ;
     font-size: 24px ;
+    cursor: pointer;;
 }
 .like-ctrl6{
     font-size: 20px ;
     font-weight: 700 ;
     margin-right: 10px ;
+}
+
+.ver-elip-ctrl{
+    /* margin-top:px; */
+}
+
+.drop-ctrl{
+    display: flex;
+    border: none;
+    outline: none;
+    
 }
 
 

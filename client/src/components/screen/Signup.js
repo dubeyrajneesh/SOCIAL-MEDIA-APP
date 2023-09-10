@@ -54,7 +54,7 @@ const Signup = () => {
 
 
         </div>
-        <div className=" form-ctrl col-lg-5 col-md-5 col-sm-12">
+        <div className=" form-ctrl22 col-lg-5 col-md-5 col-sm-12">
           <div className="right-ctrl shadow-lg">
 
            {loading ? <div className="spinner-border text-primary mt-2" text-center role="status" >
@@ -96,7 +96,7 @@ const Signup = () => {
               </div>
               <div className="d-grid mt-5 mb-5">
 
-                <button class="btn btn-outline-secondary shadow-lg "><span className="text-muted">Already have an account ?</span>
+                <button class="custom-btn custom-btn-white shadow-lg "><span className="text-muted">Already have an account ?</span>
                   <NavLink exact to='/login' className="NavLink-ctrl"> <span className="text-info"> Log In</span> </NavLink>
                 </button>
               </div>

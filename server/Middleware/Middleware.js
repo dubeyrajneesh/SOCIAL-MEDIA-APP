@@ -6,7 +6,6 @@ const UserModel = mongoose.model("UserModel");
 
 module.exports = (req, res, next)=>{
     const {authorization} = req.headers;
-    //Bearer fsfsjfsfgjgj
     if(!authorization){
         return res.status(401).json({error: "User not logged in"});
     }
@@ -19,7 +18,7 @@ module.exports = (req, res, next)=>{
         UserModel.findById(_id)
         .then((dbUser)=>{
             req.user = dbUser;
-            next();//goes to the next middleware or goes to the REST API
+            next();
         })
     });
 }

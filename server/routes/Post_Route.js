@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const PostModel = mongoose.model("PostModel");
 const protectedRoute = require("../Middleware/Middleware");
+// const PostModel = require('../Modeks/Post_Model')
 
 router.get("/allposts", (req, res) => {
     PostModel.find()
@@ -43,16 +44,37 @@ router.post("/createpost", protectedRoute, (req, res) => {
         })
 });
 
+// router.delete("/deletepost/:postId", protectedRoute, (req, res) => {
+//     PostModel.findOne({ _id: req.params.postId })
+//         .populate("author", "_id")
+//         .exec((error, postFound) => {
+//             if (error || !postFound) {
+//                 return res.status(400).json({ error: "Post does not exist" });
+//             }
+           
+//             if (postFound.author._id.toString() === req.user._id.toString()) {
+//                 postFound.remove()
+//                     .then((data) => {
+//                         res.status(200).json({ result: data });
+//                     })
+//                     .catch((error) => {
+//                         console.log(error);
+//                     })
+//             }
+//         })
+// });
+
 router.delete("/deletepost/:postId", protectedRoute, (req, res) => {
     PostModel.findOne({ _id: req.params.postId })
         .populate("author", "_id")
-        .exec((error, postFound) => {
-            if (error || !postFound) {
-                return res.status(400).json({ error: "Post does not exist" });
+        .then((postFound) => {  // exec() fucntion is not working with latest mongoose
+            if (!postFound) {
+                return res.status(400).json({ result: "Post does not exist" });
             }
             //check if the post author is same as loggedin user only then allow deletion
+            console.log(postFound);
             if (postFound.author._id.toString() === req.user._id.toString()) {
-                postFound.remove()
+                postFound.deleteOne()  // remove() function is also not working with latest mongodb
                     .then((data) => {
                         res.status(200).json({ result: data });
                     })
@@ -61,6 +83,10 @@ router.delete("/deletepost/:postId", protectedRoute, (req, res) => {
                     })
             }
         })
+        .catch((error) => {
+            return res.status(400).json({ error: "Post does not exist error" });
+        });
+
 });
 
 router.put("/like", protectedRoute, (req, res) => {
@@ -69,12 +95,19 @@ router.put("/like", protectedRoute, (req, res) => {
     }, {
         new: true //returns updated record
     }).populate("author", "_id fullName")
-        .exec((error, result) => {
-            if (error) {
-                return res.status(400).json({ error: error });
-            } else {
-                res.json(result);
-            }
+        // .exec((error, result) => {
+        //     if (error) {
+        //         return res.status(400).json({ error: error });
+        //     } else {
+        //         res.json(result);
+        //     }
+        // })
+
+        .then((result) => {
+            return res.status(200).json(result);
+        })
+        .catch((error) => {
+            return res.status(400).json({ error: error });
         })
 });
 router.put("/unlike", protectedRoute, (req, res) => {
@@ -83,12 +116,19 @@ router.put("/unlike", protectedRoute, (req, res) => {
     }, {
         new: true //returns updated record
     }).populate("author", "_id fullName")
-        .exec((error, result) => {
-            if (error) {
-                return res.status(400).json({ error: error });
-            } else {
-                res.json(result);
-            }
+        // .exec((error, result) => {
+        //     if (error) {
+        //         return res.status(400).json({ error: error });
+        //     } else {
+        //         res.json(result);
+        //     }
+        // })
+
+        .then((result) => {
+            return res.status(200).json(result);
+        })
+        .catch((error) => {
+            return res.status(400).json({ error: error });
         })
 });
 router.put("/comment", protectedRoute, (req, res) => {
@@ -101,12 +141,19 @@ router.put("/comment", protectedRoute, (req, res) => {
         new: true //returns updated record
     }).populate("comments.commentedBy", "_id fullName") //comment owner
         .populate("author", "_id fullName")// post owner
-        .exec((error, result) => {
-            if (error) {
-                return res.status(400).json({ error: error });
-            } else {
-                res.json(result);
-            }
+        // .exec((error, result) => {
+        //     if (error) {
+        //         return res.status(400).json({ error: error });
+        //     } else {
+        //         res.json(result);
+        //     }
+        // })
+
+        .then((result) => {
+            return res.status(200).json(result);
+        })
+        .catch((error) => {
+            return res.status(400).json({ error: error });
         })
 });
 module.exports = router;

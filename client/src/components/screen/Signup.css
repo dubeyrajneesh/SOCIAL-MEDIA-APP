@@ -20,6 +20,7 @@
     padding: 15px 40px ;
     align-items: center ;
     text-align: center ;
+    background-color: #fff;
     /* border: 2px solid red ; */
 }
 .login-ctrl{
@@ -33,7 +34,7 @@
 }
 
 .form-control{
-    background-color: #F2F2F2;
+    /* background-color: #F2F2F2; */
     border-radius: 2px;
 }
 .or-ctrl{
@@ -73,6 +74,11 @@
         padding: 5px 5px ;
         /* display: flex; */
         justify-content: center ;
+        background-color: #fff;
+    }
+    .form-ctrl22{
+        background-color: #fff;
+
     }
   
 

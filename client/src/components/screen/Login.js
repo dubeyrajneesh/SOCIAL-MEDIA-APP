@@ -40,14 +40,16 @@ const Login = () => {
     // setLoading(false) ;
 
     // event.preventDefault();
+    // debugger;
     setLoading(true);
     const requestData = { email, password }
     axios.post(`${API_BASE_URL}/login`, requestData)
         .then((result) => {
+          // debugger;
             if (result.status == 200) {
               
                 setLoading(false);
-                localStorage.setItem("token", result.data.result.token);
+                localStorage.setItem('token', result.data.result.token);
                 localStorage.setItem('user', JSON.stringify(result.data.result.user));
                 dispatch({ type: 'LOGIN_SUCCESS', payload: result.data.result.user });
                 setLoading(false);
@@ -106,7 +108,7 @@ const Login = () => {
               </div>
               <div className="d-grid mt-5 mb-5">
 
-              <button  class="btn btn-outline-secondary shadow-lg ">
+              <button  class="custom-btn custom-btn-white shadow-lg ">
                 <span className="text-muted">Don't have an account ?</span>
               <NavLink exact to='/signup' className="NavLink-ctrl">  <span className="text-info"> Sign Up</span> </NavLink>
               </button>

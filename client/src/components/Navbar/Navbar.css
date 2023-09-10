@@ -16,6 +16,11 @@ body{
 }
 .lm-ctrl{
     cursor: pointer;
+    width: 30px ;
+    height: 30px ;
+    border-radius: 50%;
+    margin-top: 6px;;
+    margin-left: 5px;
 }
 
 .form-ctrl2{

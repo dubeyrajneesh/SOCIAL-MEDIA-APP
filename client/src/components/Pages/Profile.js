@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import './Profile.css'
@@ -6,19 +6,24 @@ import axios from 'axios';
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from '../Config';
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
+
+    const user = useSelector(state => state.UserReducer);
+    const [myAllPosts, setMyAllPosts] = useState([]);
+    const[postDetails , setPostDetails] = useState({}) ;
 
     const [show, setShow] = useState(false);
     const [image, setImage] = useState({ preview: '', data: '' })
     const [caption, setCaption] = useState("");
     const [location, setLocation] = useState("");
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate() ;
+    const navigate = useNavigate();
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    
+
 
     const [showPost, setShowPost] = useState(false);
 
@@ -27,10 +32,10 @@ const Profile = () => {
 
     const CONFIG_OBJ = {
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + localStorage.getItem("token")
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("token")
         }
-      }
+    }
 
     const handleFileSelect = (e) => {
         const img = {
@@ -49,7 +54,7 @@ const Profile = () => {
         return response;
     }
 
-    const AddPost = async() => {
+    const AddPost = async () => {
 
         if (image.preview === '') {
             Swal.fire({
@@ -70,8 +75,8 @@ const Profile = () => {
             setLoading(true);
             const imgRes = await handleImgUpload();
             const request = { description: caption, location: location, image: `${API_BASE_URL}/files/${imgRes.data.fileName}` }
-            
-            const postResponse = await axios.post(`${API_BASE_URL}/createpost`, request , CONFIG_OBJ   )
+
+            const postResponse = await axios.post(`${API_BASE_URL}/createpost`, request, CONFIG_OBJ)
             setLoading(false);
             navigate('/posts')
             if (postResponse.status == 201) {
@@ -86,6 +91,46 @@ const Profile = () => {
     }
 
     const Profileimage = "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dG93ZXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+
+
+    const getMyAllPosts = async () => {
+        const response = await axios.get(`${API_BASE_URL}/myallposts`, CONFIG_OBJ);
+
+        if (response.status === 200) {
+            setMyAllPosts(response.data.posts);
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Some error occurred while getting my all posts'
+            })
+        }
+    }
+
+    const deletePost = async (postId) => {
+        const res = await axios.delete(`${API_BASE_URL}/deletepost/${postId}`, CONFIG_OBJ)
+        if (res.status === 200) {
+          getMyAllPosts();
+          setShow(false);
+        }
+    
+      }
+    
+
+    const showDetail = (post) => {
+        setPostDetails(post);
+      }
+
+    useEffect(() => {
+
+        getMyAllPosts();
+
+
+    }, [])
+
+
+
+
+
     return (
         <div>
             <div className="container8 shadow-lg">
@@ -98,25 +143,25 @@ const Profile = () => {
                             </div>
                             <div className="res-ctrl1">
                                 <div className="username-ctrl">
-                                    rashu_pdv
+                                    {user.user.email}
                                 </div>
 
                                 <div className="name-ctrl">
-                                    Rashika Padave
+                                    {user.user.fullname}
                                 </div>
 
                             </div>
                         </div>
                         <div className="about-ctrl">
                             <span> UI/UX Designer</span>&nbsp;
-                            <span className="text-color-ctrl">@eduonix </span>&nbsp;
+                            <span className="text-color-ctrl">{user.user.email}</span>&nbsp;
                             <span>| Follow</span>&nbsp;
-                            <span className="text-color-ctrl">@rashui</span>
+                            <span className="text-color-ctrl">{user.user.fullname}</span>
                         </div>
 
                         <div className="portfolio-ctrl">
                             <span>My portfolio on</span>&nbsp;
-                            <span className="text-color-ctrl">bubble.com/rashik_padave</span>
+                            <span className="text-color-ctrl">bubble.com/{user.user.email}</span>
                         </div>
 
 
@@ -129,7 +174,7 @@ const Profile = () => {
                             <div className="right-section-ctrl">
                                 <div className="right-upper-ctrl">
                                     <div className="post-ctrl">
-                                        <div className="font-ctrl">10</div>
+                                        <div className="font-ctrl">{myAllPosts.length}</div>
                                         <div className="test-ctrl">Posts</div>
 
                                     </div>
@@ -168,7 +213,7 @@ const Profile = () => {
 
                                 <div className="right-upper-ctrl">
                                     <div className="post-ctrl">
-                                        <div className="font-ctrl">10</div>
+                                        <div className="font-ctrl">{myAllPosts.length}</div>
                                         <div className="test-ctrl">Posts</div>
 
                                     </div>
@@ -196,37 +241,26 @@ const Profile = () => {
                 </div>
 
                 <div className="row mt-4 gall-ctrl">
-                    <div onClick={handleShow} className="col-lg-4 col-md-4 col-sm-4">
-                        <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Rmxvd2Vyc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="img" className="gall-img-ctrl" />
+                   
+                        {
+                        myAllPosts.map((post) => {
+                            return (
+                                <div  className="col-lg-4 col-md-4 col-sm-4"  key={post._id}>
+                                    <div className="card" onClick={handleShow}>
+                                        <img
+                                        
+                                        onClick={() => showDetail(post)}
+                                        
+                                        src={post.image} className=" gall-img-ctrl" alt={post.description} />
+                                    </div>
+                                </div>
+                            )
+                        })
+                        }
+                   
 
-                    </div>
-
-                    <div className="col-lg-4 col-md-4 col-sm-4">
-                        <img onClick={handleShow} src="https://images.unsplash.com/photo-1519378058457-4c29a0a2efac?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Rmxvd2Vyc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="img" className="gall-img-ctrl" />
-
-                    </div>
-
-                    <div className="col-lg-4 col-md-4 col-sm-4">
-                        <img src="https://images.unsplash.com/photo-1457089328109-e5d9bd499191?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fEZsb3dlcnN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" alt="img" className="gall-img-ctrl" />
-
-                    </div>
                 </div>
-                <div className="row mt-4 gall-ctrl">
-                    <div className="col-lg-4 col-md-4 col-sm-4">
-                        <img src="https://images.unsplash.com/photo-1572454591674-2739f30d8c40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Zmxvd2VyJTIwYm91cXVldHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="img" className="gall-img-ctrl" />
 
-                    </div>
-
-                    <div className="col-lg-4 col-md-4 col-sm-4">
-                        <img src="https://images.unsplash.com/photo-1596438459194-f275f413d6ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Zmxvd2VyJTIwYm91cXVldHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="img" className="gall-img-ctrl" />
-
-                    </div>
-
-                    <div className="col-lg-4 col-md-4 col-sm-4">
-                        <img src="https://images.unsplash.com/photo-1533616688419-b7a585564566?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZsb3dlciUyMGJvdXF1ZXR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" alt="img" className="gall-img-ctrl" />
-
-                    </div>
-                </div>
 
 
 
@@ -247,7 +281,7 @@ const Profile = () => {
                                         </div>
                                         <div className="carousel-inner">
                                             <div className="carousel-item active">
-                                                <img src="https://images.unsplash.com/photo-1457089328109-e5d9bd499191?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGZsb3dlcnN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" className="d-block w-100 img-ctrl12" alt="img" />
+                                                <img src={postDetails.image} className="d-block w-100 img-ctrl12" alt="img" />
                                             </div>
                                             <div className="carousel-item">
                                                 <img src="https://images.unsplash.com/photo-1492950103599-127d2be251b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzJ8fGZsb3dlcnN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" className="d-block w-100 img-ctrl12" alt="img" />
@@ -275,8 +309,8 @@ const Profile = () => {
                                             <img src={Profileimage} alt="img" className="img-ctrl13"></img>
                                         </div>
                                         <div className="right-modal">
-                                            <div className="right-modal-name">rashu_pdv</div>
-                                            <div className="right-modal-location"> Mumbai , India</div>
+                                            <div className="right-modal-name">{postDetails.description}</div>
+                                            <div className="right-modal-location"> {postDetails.location}</div>
                                         </div>
                                         <div className="ellipsis-ctrl ">
 
@@ -288,7 +322,7 @@ const Profile = () => {
                                                 <ul className="dropdown-menu">
                                                     <li><button className="dropdown-item" type="button">
                                                         <i className="fa-solid fa-pen-to-square"></i>&nbsp; Edit Post </button></li>
-                                                    <li><button className="dropdown-item" type="button"><i className="fa-solid fa-trash"></i>&nbsp; Delete Post</button></li>
+                                                    <li><button onClick={()=>{deletePost(postDetails._id)}} className="dropdown-item" type="button"><i className="fa-solid fa-trash"></i>&nbsp; Delete Post</button></li>
 
                                                 </ul>
                                             </div>
@@ -343,8 +377,8 @@ const Profile = () => {
 
 
                 <Modal show={showPost} onHide={handlePostClose} size="lg">
-                    <Modal.Header closeButton>
-                        <Modal.Title>Upload Post</Modal.Title>
+                    <Modal.Header closeButton className="modal-header-ctrl">
+                        <Modal.Title  >Upload Post</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
 
@@ -367,11 +401,11 @@ const Profile = () => {
                                     <div className="container18">
                                         <form>
                                             <div className="form-floating mb-3">
-                                                <textarea onChange={(e) =>  setCaption(e.target.value) } className="form-control" placeholder="Add Caption" id="floatingTextarea"></textarea>
+                                                <textarea onChange={(e) => setCaption(e.target.value)} className="form-control" placeholder="Add Caption" id="floatingTextarea"></textarea>
                                                 <label for="floatingTextarea">Add Caption</label>
                                             </div>
                                             <div className="form-floating mb-3">
-                                                <input onChange={(e) =>  setLocation(e.target.value) } type="text" className="form-control" id="floatingInput" placeholder="Add Location" />
+                                                <input onChange={(e) => setLocation(e.target.value)} type="text" className="form-control" id="floatingInput" placeholder="Add Location" />
                                                 <label for="floatingInput"><i className="fa-solid fa-location-pin pe-2"></i>Add Location</label>
                                             </div>
 
