@@ -236,8 +236,8 @@
 
     .container8{
         /* border: 1px solid red ; */
-        padding: 10px 20px ;
-        width: 95vw ;
+        padding: 10px 10px ;
+        width: 98vw ;
         /* margin: 10px auto ; */
     }
     .img-ctrl9{
@@ -248,11 +248,11 @@
     }
 
     .res-ctrl1{
-        margin-left: 15px;
+        /* margin-left: 5px; */
     }
 
     .res-ctrl2{
-        display: flex ;
+        /* display: flex ; */
         /* border: 2px solid red ; */
     }
 
@@ -262,10 +262,10 @@
     }
 
     .right-upper-ctrl{
-        padding: 0px 10px ;
+        padding: 0px 40px ;
         display: flex;
         justify-content: space-between;
-        margin-top: 30px;;
+        /* margin-top: 30px;; */
     
     }
 
@@ -294,7 +294,7 @@
         display: flex ;
     }
     .username-ctrl{
-        margin-top: 20px ;
+        margin-top: 15px ;
         font-size: 20px ;
         font-weight: bold ;
     }
@@ -340,6 +340,38 @@
 
     .container20{
         margin-bottom: 20px ;
+    }
+
+    .font-ctrl{
+        font-size: 20px;
+        font-weight: 700 ;
+    }
+    
+    .test-ctrl{
+        font-size: 15px ;
+        font-weight: 600 ;
+    }
+
+    .post-ctrl{
+        border-right: 1px solid rgb(163, 157, 157);
+        text-align: center ;
+       
+    
+    }
+    .follower-ctrl{
+    
+        border-right: 1px solid rgb(163, 157, 157);
+        text-align: center ;
+        margin-left: 15px;
+    
+    }
+    
+    .following-ctrl{
+    
+        /* border-right: 1px solid rgb(163, 157, 157); */
+        text-align: center ;
+        margin-left: 15px;
+    
     }
 
  
