@@ -33,7 +33,15 @@ const Navbar = () => {
 
             <div className="icon-ctrl">
               <NavLink exact to='/posts' className="nav-last-ctrl"> <i className="fa-solid fa-house p-2 fs-4 mr-3"></i> </NavLink>
-              {localStorage.getItem("token") != null ? <i className="fa-regular fa-heart p-2 fs-4 mr-3"></i> : ''}
+              {localStorage.getItem("token") != null ? <i className="fa-regular fa-heart p-2 fs-4 mr-3"></i> :
+              
+              <>
+              
+             <NavLink exact to ='/login'> <button type="button" className="btn btn-primary login-btn-ctrl">Login</button></NavLink>
+              
+              </>
+              
+              }
 
 
               <div class="dropdown">

@@ -40,6 +40,10 @@ body{
     color: inherit;
     text-decoration: none;
 }
+.login-btn-ctrl{
+    padding:6px 36px ;
+    margin-left: 10px;
+}
 
 @media only screen and (max-width: 450px)
 {
