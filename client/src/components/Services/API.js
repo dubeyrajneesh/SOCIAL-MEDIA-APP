@@ -1,5 +1,6 @@
 import axios from 'axios' ;
-const API_BASE_URL = 'http://localhost:4000' ;
+// const API_BASE_URL = 'https://instagram-clone-be.onrender.com' ;
+ const API_BASE_URL= 'http:localhost:4000' ;
 
 export const SignUpServices = async(user)=>{
     try{
